@@ -8,7 +8,6 @@ assignees: ''
 ---
 
 ### Bug Description
-[A clear and concise description of what the bug is.]
 <!--
 **Don't use hastebin or other time-limited services to post your logs!**
 Suggested alternatives: https://gist.github.com or https://pastebin.com
@@ -19,13 +18,16 @@ If you report a console error, take the earliest version in the console log to e
 
 Large blocks of text should be pasted on https://gist.github.com, https://pastebin.com or within Markdown code blocks.
  -->
+[A clear and concise description of what the bug is.]
 
 
 ### Technical Setup
-[Information about the server where the plugin is running].
- - Server Software and Version: 
- - Installed Plugins: 
- - Version of Message Blocker: 
+ - **Server Software and Version**: 
+ - **Installed Plugins**: 
+ - **Version of Message Blocke**r: 
 
 
 ### Plugin Configuration
+```yaml
+blocked:
+```
