@@ -1,0 +1,6 @@
+name: MessageBlocker
+version: 1.0.0
+description: Block annoying chat messages from the Minecraft vanilla server, plugins or players.
+author: MC-Resources
+website: https://mc-resources.store
+main: store.mc_resources.message_blocker.MessageBlocker

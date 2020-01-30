@@ -1,0 +1,22 @@
+# Message Blocker by MC-resource
+## https://github.com/MC-Resources-Store/message-blocker
+
+### Please add the plain text as 'message' - color codes are ignored!
+### Valid options for 'mode': 'contains', 'exact', 'starts_with', 'ends_with'
+### If 'ignore_case' is set to true, the capitalization of the message doesn't matter.
+### 'bypass'permission' is optional. Players who have the specified permission are exempted and will always receive the message.
+### Please note that this doesn't only affect server, but also player messages.
+
+blocked:
+  - message: 'Message Blocker'
+    mode: 'exact'
+    ignore_case: true
+    bypass_permission:
+  - message: 'blockedmessage'
+    mode: 'contains'
+    ignore_case: false
+    bypass_permission:
+  - message: 'staff-only message'
+    mode: 'contains'
+    ignore_case: true
+    bypass_permission: 'minecraft.command.say'
