@@ -93,15 +93,22 @@ public final class MessageBlocker extends JavaPlugin {
 		final BaseComponent[] components = componentsField.get(packet);
 
 		if (components != null) {
+		    System.out.println(components);
 		    text = Optional.ofNullable(BaseComponent.toPlainText(components));
 		} else {
 		    final StringBuilder textBuilder = new StringBuilder();
+		    final Object iChatBaseComponent = chatBaseComponentField.get(packet);
+		    final List<?> iChatBaseComponentList = (List<?>) iChatBaseComponentGetSiblingsMethod.invoke(iChatBaseComponent);
 
-		    for (Object iChatBaseComponent : (List<?>) iChatBaseComponentGetSiblingsMethod.invoke(chatBaseComponentField.get(packet))) {
-			final String part = (String) chatBaseComponentGetTextMethod.invoke(iChatBaseComponent);
+		    if (iChatBaseComponentList.isEmpty()) {
+			textBuilder.append((String) chatBaseComponentGetTextMethod.invoke(iChatBaseComponent));
+		    } else {
+			for (Object iChatBaseComponentEntry : iChatBaseComponentList) {
+			    final String part = (String) chatBaseComponentGetTextMethod.invoke(iChatBaseComponentEntry);
 
-			if (part != null) {
-			    textBuilder.append(part);
+			    if (part != null) {
+				textBuilder.append(part);
+			    }
 			}
 		    }
 
@@ -148,7 +155,8 @@ public final class MessageBlocker extends JavaPlugin {
 	    }
 	});
 
-	this.getLogger().log(Level.INFO, "Loaded " + this.blockedEntries.size() + " blocked entries from the configuration file.");
+	this.getLogger().log(Level.INFO,
+		"Loaded " + this.blockedEntries.size() + " blocked entries from the configuration file.");
     }
 
 }
