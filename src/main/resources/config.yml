@@ -13,7 +13,7 @@ blocked:
     mode: 'exact'
     ignore_case: true
     bypass_permission:
-  # Blocked if message contains 'blockedmessage' (case-sensitive)-
+  # Blocked if message contains 'blockedmessage' (case-sensitive).
   - message: 'blockedmessage'
     mode: 'contains'
     ignore_case: false
