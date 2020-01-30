@@ -8,14 +8,18 @@
 ### Please note that this doesn't only affect server, but also player messages.
 
 blocked:
+  # Blocked if message equals 'Message Blocker' (case-insensitive).
   - message: 'Message Blocker'
     mode: 'exact'
     ignore_case: true
     bypass_permission:
+  # Blocked if message contains 'blockedmessage' (case-sensitive)-
   - message: 'blockedmessage'
     mode: 'contains'
     ignore_case: false
     bypass_permission:
+  # Blocked if message contains 'staff-only message' (case-insensitive) and
+  # the player doesn't have permission to the /say command.
   - message: 'staff-only message'
     mode: 'contains'
     ignore_case: true
