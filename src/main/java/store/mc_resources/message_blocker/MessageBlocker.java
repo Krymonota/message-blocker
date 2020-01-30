@@ -93,7 +93,6 @@ public final class MessageBlocker extends JavaPlugin {
 		final BaseComponent[] components = componentsField.get(packet);
 
 		if (components != null) {
-		    System.out.println(components);
 		    text = Optional.ofNullable(BaseComponent.toPlainText(components));
 		} else {
 		    final StringBuilder textBuilder = new StringBuilder();
