@@ -37,118 +37,118 @@ import store.mc_resources.message_blocker.lib.com.comphenix.tinyprotocol.Reflect
 
 public final class MessageBlocker extends JavaPlugin {
 
-	private static final Class<?> packetPlayOutChatClass = Reflection.getClass("{nms}.PacketPlayOutChat");
-	private static final Class<?> iChatBaseComponentClass = Reflection.getClass("{nms}.IChatBaseComponent");
-	private static final FieldAccessor<?> chatBaseComponentField = Reflection.getField(packetPlayOutChatClass, iChatBaseComponentClass, 0);
-	private static final FieldAccessor<BaseComponent[]> componentsField = Reflection.getField(packetPlayOutChatClass, BaseComponent[].class, 0);
-	private static final MethodInvoker chatBaseComponentGetTextMethod = Reflection.getTypedMethod(iChatBaseComponentClass, "getText", String.class);
-	private static MethodInvoker iChatBaseComponentGetSiblingsMethod;
-	
-	static {
-		String iChatBaseComponentGetSiblingsMethodName = null;
-		
-		for (Method method : iChatBaseComponentClass.getMethods()) {
-			if (!List.class.isAssignableFrom(method.getReturnType())) {
-				continue;
-			}
-			
-			if (method.getParameterCount() != 0) {
-				continue;
-			}
-			
-			iChatBaseComponentGetSiblingsMethodName = method.getName();
-			break;
-		}
-		
-		if (iChatBaseComponentGetSiblingsMethodName != null) {
-			iChatBaseComponentGetSiblingsMethod = Reflection.getTypedMethod(iChatBaseComponentClass, iChatBaseComponentGetSiblingsMethodName, List.class);
-		}
-	}
-	
-	private final List<BlockedEntry> blockedEntries = new ArrayList<BlockedEntry>();
-	
-	@Override
-	public void onEnable() {
-		this.saveDefaultConfig();
-		
-		if (iChatBaseComponentGetSiblingsMethod == null) {
-			this.getLogger().log(Level.SEVERE, "Unable to find siblings method for IChatBaseComponent. Your Minecraft server version might be unsupported by this plugin.");
-			
-			Bukkit.getServer().getPluginManager().disablePlugin(this);
-			
-			return;
-		}
-		
-		this.loadBlockedEntries();
-		
-		new TinyProtocol(this) {
+    private static final Class<?> packetPlayOutChatClass = Reflection.getClass("{nms}.PacketPlayOutChat");
+    private static final Class<?> iChatBaseComponentClass = Reflection.getClass("{nms}.IChatBaseComponent");
+    private static final FieldAccessor<?> chatBaseComponentField = Reflection.getField(packetPlayOutChatClass, iChatBaseComponentClass, 0);
+    private static final FieldAccessor<BaseComponent[]> componentsField = Reflection.getField(packetPlayOutChatClass, BaseComponent[].class, 0);
+    private static final MethodInvoker chatBaseComponentGetTextMethod = Reflection.getTypedMethod(iChatBaseComponentClass, "getText", String.class);
+    private static MethodInvoker iChatBaseComponentGetSiblingsMethod;
 
-			@Override
-			public Object onPacketOutAsync(Player receiver, Channel channel, Object packet) {
-				if (!packetPlayOutChatClass.isInstance(packet)) {
-					return super.onPacketOutAsync(receiver, channel, packet);
-				}
-				
-				Optional<String> text = Optional.empty();
-				final BaseComponent[] components = componentsField.get(packet);
-				
-				if (components != null) {
-					text = Optional.ofNullable(BaseComponent.toPlainText(components));
-				} else {
-					final StringBuilder textBuilder = new StringBuilder();
-					
-					for (Object iChatBaseComponent : (List<?>) iChatBaseComponentGetSiblingsMethod.invoke(chatBaseComponentField.get(packet))) {
-						final String part = (String) chatBaseComponentGetTextMethod.invoke(iChatBaseComponent);
-						
-						if (part != null) {
-							textBuilder.append(part);
-						}
-					}
-					
-					text = Optional.of(textBuilder.toString());
-				}
-								
-				if (text.isPresent()) {
-					for (BlockedEntry entry : MessageBlocker.this.blockedEntries) {
-						if (entry.isBlocked(receiver, text.get())) {
-							return null;
-						}
-					}
-				}
+    static {
+	String iChatBaseComponentGetSiblingsMethodName = null;
 
-				return super.onPacketOutAsync(receiver, channel, packet);
-			}
+	for (Method method : iChatBaseComponentClass.getMethods()) {
+	    if (!List.class.isAssignableFrom(method.getReturnType())) {
+		continue;
+	    }
 
-		};
+	    if (method.getParameterCount() != 0) {
+		continue;
+	    }
+
+	    iChatBaseComponentGetSiblingsMethodName = method.getName();
+	    break;
 	}
-	
-	@SuppressWarnings("unchecked")
-	private void loadBlockedEntries() {
-		this.getConfig().getList("blocked").forEach(obj -> {
-			if (!(obj instanceof Map<?, ?>)) {
-				return;
-			}
-			
-			try {
-				final Map<String, Object> entry = (Map<String, Object>) obj;
-				
-				final String message = (String) entry.getOrDefault("message", "");
-				
-				if (message.isEmpty()) {
-					return;
-				}
-				
-				final CheckMode mode = CheckMode.valueOf(((String) entry.get("mode")).toUpperCase());
-				final boolean ignoreCase = (boolean) entry.getOrDefault("ignore_case", true);
-				final String permission = (String) entry.get("bypass_permission");
-				
-				this.blockedEntries.add(new BlockedEntry(message, mode, ignoreCase, Optional.ofNullable(permission)));
-			} catch (Exception e) {
-				this.getLogger().log(Level.SEVERE, "Failed to read a blocked entry from the configuration file!", e);
-			}
-		});
-		
-		this.getLogger().log(Level.INFO, "Loaded " + this.blockedEntries.size() + " blocked entries from the configuration file.");
+
+	if (iChatBaseComponentGetSiblingsMethodName != null) {
+	    iChatBaseComponentGetSiblingsMethod = Reflection.getTypedMethod(iChatBaseComponentClass, iChatBaseComponentGetSiblingsMethodName, List.class);
 	}
-	
+    }
+
+    private final List<BlockedEntry> blockedEntries = new ArrayList<BlockedEntry>();
+
+    @Override
+    public void onEnable() {
+	this.saveDefaultConfig();
+
+	if (iChatBaseComponentGetSiblingsMethod == null) {
+	    this.getLogger().log(Level.SEVERE, "Unable to find siblings method for IChatBaseComponent. Your Minecraft server version might be unsupported by this plugin.");
+
+	    Bukkit.getServer().getPluginManager().disablePlugin(this);
+
+	    return;
+	}
+
+	this.loadBlockedEntries();
+
+	new TinyProtocol(this) {
+
+	    @Override
+	    public Object onPacketOutAsync(Player receiver, Channel channel, Object packet) {
+		if (!packetPlayOutChatClass.isInstance(packet)) {
+		    return super.onPacketOutAsync(receiver, channel, packet);
+		}
+
+		Optional<String> text = Optional.empty();
+		final BaseComponent[] components = componentsField.get(packet);
+
+		if (components != null) {
+		    text = Optional.ofNullable(BaseComponent.toPlainText(components));
+		} else {
+		    final StringBuilder textBuilder = new StringBuilder();
+
+		    for (Object iChatBaseComponent : (List<?>) iChatBaseComponentGetSiblingsMethod.invoke(chatBaseComponentField.get(packet))) {
+			final String part = (String) chatBaseComponentGetTextMethod.invoke(iChatBaseComponent);
+
+			if (part != null) {
+			    textBuilder.append(part);
+			}
+		    }
+
+		    text = Optional.of(textBuilder.toString());
+		}
+
+		if (text.isPresent()) {
+		    for (BlockedEntry entry : MessageBlocker.this.blockedEntries) {
+			if (entry.isBlocked(receiver, text.get())) {
+			    return null;
+			}
+		    }
+		}
+
+		return super.onPacketOutAsync(receiver, channel, packet);
+	    }
+
+	};
+    }
+
+    @SuppressWarnings("unchecked")
+    private void loadBlockedEntries() {
+	this.getConfig().getList("blocked").forEach(obj -> {
+	    if (!(obj instanceof Map<?, ?>)) {
+		return;
+	    }
+
+	    try {
+		final Map<String, Object> entry = (Map<String, Object>) obj;
+
+		final String message = (String) entry.getOrDefault("message", "");
+
+		if (message.isEmpty()) {
+		    return;
+		}
+
+		final CheckMode mode = CheckMode.valueOf(((String) entry.get("mode")).toUpperCase());
+		final boolean ignoreCase = (boolean) entry.getOrDefault("ignore_case", true);
+		final String permission = (String) entry.get("bypass_permission");
+
+		this.blockedEntries.add(new BlockedEntry(message, mode, ignoreCase, Optional.ofNullable(permission)));
+	    } catch (Exception e) {
+		this.getLogger().log(Level.SEVERE, "Failed to read a blocked entry from the configuration file!", e);
+	    }
+	});
+
+	this.getLogger().log(Level.INFO, "Loaded " + this.blockedEntries.size() + " blocked entries from the configuration file.");
+    }
+
 }

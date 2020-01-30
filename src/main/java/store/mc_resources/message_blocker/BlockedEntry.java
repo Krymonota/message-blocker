@@ -26,43 +26,43 @@ import net.md_5.bungee.api.ChatColor;
 
 @Getter
 public final class BlockedEntry {
-	
-	private final String message;
-	private final CheckMode mode;
-	private final boolean ignoreCase;
-	private final Optional<String> bypassPermission;
-	
-	public BlockedEntry(String message, CheckMode mode, boolean ignoreCase, Optional<String> bypassPermission) {
-		this.message = ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', message));
-		this.mode = mode;
-		this.ignoreCase = ignoreCase;
-		this.bypassPermission = bypassPermission;
+
+    private final String message;
+    private final CheckMode mode;
+    private final boolean ignoreCase;
+    private final Optional<String> bypassPermission;
+
+    public BlockedEntry(String message, CheckMode mode, boolean ignoreCase, Optional<String> bypassPermission) {
+	this.message = ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', message));
+	this.mode = mode;
+	this.ignoreCase = ignoreCase;
+	this.bypassPermission = bypassPermission;
+    }
+
+    public boolean isBlocked(Player player, String message) {
+	if (this.bypassPermission.isPresent() && player.hasPermission(this.bypassPermission.get())) {
+	    return false;
 	}
-	
-	public boolean isBlocked(Player player, String message) {
-		if (this.bypassPermission.isPresent() && player.hasPermission(this.bypassPermission.get())) {
-			return false;
-		}
-		
-		String blocked = this.message;
-		
-		if (ignoreCase) {
-			blocked = blocked.toLowerCase();
-			message = message.toLowerCase();
-		}
-		
-		switch (mode) {
-		case CONTAINS:
-			return message.contains(blocked);
-		case EXACT:
-			return message.equals(blocked);
-		case STARTS_WITH:
-			return message.startsWith(blocked);
-		case ENDS_WITH:
-			return message.endsWith(blocked);
-		default:
-			return false;
-		}
+
+	String blocked = this.message;
+
+	if (ignoreCase) {
+	    blocked = blocked.toLowerCase();
+	    message = message.toLowerCase();
 	}
+
+	switch (mode) {
+	case CONTAINS:
+	    return message.contains(blocked);
+	case EXACT:
+	    return message.equals(blocked);
+	case STARTS_WITH:
+	    return message.startsWith(blocked);
+	case ENDS_WITH:
+	    return message.endsWith(blocked);
+	default:
+	    return false;
+	}
+    }
 
 }
