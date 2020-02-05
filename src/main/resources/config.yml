@@ -4,7 +4,7 @@
 ### Please add the plain text as 'message' - color codes are ignored!
 ### Valid options for 'mode': 'contains', 'exact', 'starts_with', 'ends_with'
 ### If 'ignore_case' is set to true, the capitalization of the message doesn't matter.
-### 'bypass'permission' is optional. Players who have the specified permission are exempted and will always receive the message.
+### 'bypass_permission' is optional. Players who have the specified permission are exempted and will always receive the message.
 ### Please note that this doesn't only affect server, but also player messages.
 
 blocked:
