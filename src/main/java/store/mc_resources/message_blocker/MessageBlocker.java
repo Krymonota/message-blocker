@@ -110,12 +110,11 @@ public final class MessageBlocker extends JavaPlugin {
 		    final List<?> iChatBaseComponentList = (List<?>) iChatBaseComponentGetSiblingsMethod.invoke(iChatBaseComponent);
 
 		    if (iChatBaseComponentList.isEmpty()) {
-			System.out.println("C: " + (String) chatBaseComponentGetTextMethod.invoke(iChatBaseComponent));
 			textBuilder.append((String) chatBaseComponentGetTextMethod.invoke(iChatBaseComponent));
 		    } else {
 			for (Object iChatBaseComponentEntry : iChatBaseComponentList) {
 			    final String part = (String) chatBaseComponentGetTextMethod.invoke(iChatBaseComponentEntry);
-			    System.out.println("D: " + part);
+			    
 			    if (part != null) {
 				textBuilder.append(part);
 			    }
