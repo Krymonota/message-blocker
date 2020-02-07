@@ -92,7 +92,7 @@ public final class MessageBlocker extends JavaPlugin {
 
 		Optional<String> text = Optional.empty();
 		final BaseComponent[] components = componentsField.get(packet);
-		final List<BaseComponent> processedComponents = new ArrayList<BaseComponent>();
+		final List<BaseComponent> processedComponentList = new ArrayList<BaseComponent>();
 
 		if (components != null) {
 		    // Hacky plugins utilizing abusive BaseComponent wrappers such as WorldEdit require hacky solutions
@@ -100,10 +100,12 @@ public final class MessageBlocker extends JavaPlugin {
 			final String json = ComponentSerializer.toString(component);
 			final BaseComponent processedComponent = ComponentSerializer.parse(json)[0];
 			
-			processedComponents.add(processedComponent);
+			processedComponentList.add(processedComponent);
 		    }
 		    
-		    text = Optional.ofNullable(BaseComponent.toPlainText(processedComponents.toArray(new BaseComponent[processedComponents.size()])));
+		    final BaseComponent[] processedComponentArray = processedComponentList.toArray(new BaseComponent[processedComponentList.size()]);
+		    
+		    text = Optional.ofNullable(BaseComponent.toPlainText(processedComponentArray));
 		} else {
 		    final StringBuilder textBuilder = new StringBuilder();
 		    final Object iChatBaseComponent = chatBaseComponentField.get(packet);
