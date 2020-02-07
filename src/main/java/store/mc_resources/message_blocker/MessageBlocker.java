@@ -30,10 +30,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import io.netty.channel.Channel;
 import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.chat.ComponentSerializer;
 import store.mc_resources.message_blocker.lib.com.comphenix.tinyprotocol.Reflection;
-import store.mc_resources.message_blocker.lib.com.comphenix.tinyprotocol.TinyProtocol;
 import store.mc_resources.message_blocker.lib.com.comphenix.tinyprotocol.Reflection.FieldAccessor;
 import store.mc_resources.message_blocker.lib.com.comphenix.tinyprotocol.Reflection.MethodInvoker;
+import store.mc_resources.message_blocker.lib.com.comphenix.tinyprotocol.TinyProtocol;
 
 public final class MessageBlocker extends JavaPlugin {
 
@@ -91,20 +92,30 @@ public final class MessageBlocker extends JavaPlugin {
 
 		Optional<String> text = Optional.empty();
 		final BaseComponent[] components = componentsField.get(packet);
+		final List<BaseComponent> processedComponents = new ArrayList<BaseComponent>();
 
 		if (components != null) {
-		    text = Optional.ofNullable(BaseComponent.toPlainText(components));
+		    // Hacky plugins utilizing abusive BaseComponent wrappers such as WorldEdit require hacky solutions
+		    for (BaseComponent component : components) {
+			final String json = ComponentSerializer.toString(component);
+			final BaseComponent processedComponent = ComponentSerializer.parse(json)[0];
+			
+			processedComponents.add(processedComponent);
+		    }
+		    
+		    text = Optional.ofNullable(BaseComponent.toPlainText(processedComponents.toArray(new BaseComponent[processedComponents.size()])));
 		} else {
 		    final StringBuilder textBuilder = new StringBuilder();
 		    final Object iChatBaseComponent = chatBaseComponentField.get(packet);
 		    final List<?> iChatBaseComponentList = (List<?>) iChatBaseComponentGetSiblingsMethod.invoke(iChatBaseComponent);
 
 		    if (iChatBaseComponentList.isEmpty()) {
+			System.out.println("C: " + (String) chatBaseComponentGetTextMethod.invoke(iChatBaseComponent));
 			textBuilder.append((String) chatBaseComponentGetTextMethod.invoke(iChatBaseComponent));
 		    } else {
 			for (Object iChatBaseComponentEntry : iChatBaseComponentList) {
 			    final String part = (String) chatBaseComponentGetTextMethod.invoke(iChatBaseComponentEntry);
-
+			    System.out.println("D: " + part);
 			    if (part != null) {
 				textBuilder.append(part);
 			    }
