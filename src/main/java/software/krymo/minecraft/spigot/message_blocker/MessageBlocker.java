@@ -157,6 +157,11 @@ public final class MessageBlocker extends JavaPlugin {
 		}
 
 		final CheckMode mode = CheckMode.valueOf(((String) entry.get("mode")).toUpperCase());
+		
+		if (mode == null) {
+		    return;
+		}
+		
 		final boolean ignoreCase = (boolean) entry.getOrDefault("ignore_case", true);
 		final String permission = (String) entry.get("bypass_permission");
 
