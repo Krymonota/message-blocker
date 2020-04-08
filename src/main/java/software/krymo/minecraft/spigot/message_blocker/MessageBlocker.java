@@ -86,10 +86,10 @@ public final class MessageBlocker extends JavaPlugin {
 
 	    @Override
 	    public Object onPacketOutAsync(Player receiver, Channel channel, Object packet) {
-		if (!packetPlayOutChatClass.isInstance(packet)) {
+		if (!packetPlayOutChatClass.isInstance(packet) || receiver == null) {
 		    return super.onPacketOutAsync(receiver, channel, packet);
 		}
-
+		
 		Optional<String> text = Optional.empty();
 		final BaseComponent[] components = componentsField.get(packet);
 		final List<BaseComponent> processedComponentList = new ArrayList<BaseComponent>();
