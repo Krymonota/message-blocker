@@ -39,8 +39,7 @@ blocked:
 Tip: Use the `/tellraw <player> <message>` command to test your configuration (e. g. `/tellraw @p "Message Blocker"`).
 
 
-## Support us
-My team and I work together on unique Minecraft resources like plugins and maps that we publish here on SpigotMC and MC-Market.
-If you like our plugin and would like to support our work, you're welcome to send us a small tip.
+## Support me
+If you like this plugin and would like to support my work, you're welcome to send me a small tip.
 
-[![Send us a small tip](https://www.paypalobjects.com/en_US/DK/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=73SKSSM7XA6U6&source=url)
+[![Send me a small tip](https://www.paypalobjects.com/en_US/DK/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=73SKSSM7XA6U6&source=url)
