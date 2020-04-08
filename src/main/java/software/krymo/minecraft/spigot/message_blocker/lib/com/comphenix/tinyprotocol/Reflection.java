@@ -1,4 +1,4 @@
-package store.mc_resources.message_blocker.lib.com.comphenix.tinyprotocol;
+package software.krymo.minecraft.spigot.message_blocker.lib.com.comphenix.tinyprotocol;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;

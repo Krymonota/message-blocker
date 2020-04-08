@@ -1,6 +1,6 @@
 /*
  * Message Blocker
- * Copyright (C) 2020  MC-Resources <https://mc-resources.store>
+ * Copyright (C) 2020  Krymonota
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package store.mc_resources.message_blocker;
+package software.krymo.minecraft.spigot.message_blocker;
 
 public enum CheckMode {
 

@@ -1,6 +1,6 @@
 /*
  * Message Blocker
- * Copyright (C) 2020  MC-Resources <https://mc-resources.store>
+ * Copyright (C) 2020  Krymonota
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package store.mc_resources.message_blocker;
+package software.krymo.minecraft.spigot.message_blocker;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -31,10 +31,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 import io.netty.channel.Channel;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.chat.ComponentSerializer;
-import store.mc_resources.message_blocker.lib.com.comphenix.tinyprotocol.Reflection;
-import store.mc_resources.message_blocker.lib.com.comphenix.tinyprotocol.Reflection.FieldAccessor;
-import store.mc_resources.message_blocker.lib.com.comphenix.tinyprotocol.Reflection.MethodInvoker;
-import store.mc_resources.message_blocker.lib.com.comphenix.tinyprotocol.TinyProtocol;
+import software.krymo.minecraft.spigot.message_blocker.lib.com.comphenix.tinyprotocol.Reflection;
+import software.krymo.minecraft.spigot.message_blocker.lib.com.comphenix.tinyprotocol.TinyProtocol;
+import software.krymo.minecraft.spigot.message_blocker.lib.com.comphenix.tinyprotocol.Reflection.FieldAccessor;
+import software.krymo.minecraft.spigot.message_blocker.lib.com.comphenix.tinyprotocol.Reflection.MethodInvoker;
 
 public final class MessageBlocker extends JavaPlugin {
 

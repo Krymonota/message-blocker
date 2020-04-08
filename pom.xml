@@ -4,19 +4,15 @@
                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>store.mc-resources</groupId>
+    <groupId>software.krymo.minecraft.spigot</groupId>
     <artifactId>message-blocker</artifactId>
     <version>1.0.2</version>
     <packaging>jar</packaging>
 
     <name>Message Blocker</name>
     <description>Block annoying chat messages from the Minecraft vanilla server, plugins or players.</description>
-    <url>https://github.com/MC-Resources-Store/message-blocker</url>
+    <url>https://github.com/Krymonota/message-blocker</url>
     <inceptionYear>2020</inceptionYear>
-    <organization>
-        <name>MC-Resources</name>
-        <url>https://mc-resources.store</url>
-    </organization>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

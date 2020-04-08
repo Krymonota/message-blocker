@@ -1,4 +1,4 @@
-package store.mc_resources.message_blocker.lib.com.comphenix.tinyprotocol;
+package software.krymo.minecraft.spigot.message_blocker.lib.com.comphenix.tinyprotocol;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelDuplexHandler;
@@ -8,8 +8,8 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.ChannelPromise;
-import store.mc_resources.message_blocker.lib.com.comphenix.tinyprotocol.Reflection.FieldAccessor;
-import store.mc_resources.message_blocker.lib.com.comphenix.tinyprotocol.Reflection.MethodInvoker;
+import software.krymo.minecraft.spigot.message_blocker.lib.com.comphenix.tinyprotocol.Reflection.FieldAccessor;
+import software.krymo.minecraft.spigot.message_blocker.lib.com.comphenix.tinyprotocol.Reflection.MethodInvoker;
 
 import java.util.Collections;
 import java.util.List;
