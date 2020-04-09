@@ -10,6 +10,8 @@ This is especially useful for messages that are sent by the Minecraft server or 
 which is sent to the player when he clicks on a bed.](https://www.spigotmc.org/threads/bed-spawn-message.415189/)
 
 ## Installation & [Configuration](/src/main/resources/config.yml)
+[Please note that this plugin may not work with server software compiled with Java 11 or later.](https://www.spigotmc.org/threads/message-blocker.415248/)
+
 Put this plugin into the Spigot plugins folder, start/restart the server and make sure to properly configure this plugin.
 
 The configuration is quite flexible and simple at the same time. 
